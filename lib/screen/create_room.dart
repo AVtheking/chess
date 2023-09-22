@@ -4,7 +4,6 @@ import 'package:multiplayer_chess/resources/socket__methods.dart';
 import 'package:multiplayer_chess/responsive/responsive.dart';
 import 'package:multiplayer_chess/widget/custom_button.dart';
 import 'package:multiplayer_chess/widget/custom_text.dart';
-import 'package:multiplayer_chess/widget/custom_text_field.dart';
 
 class CreateRoomScreen extends ConsumerStatefulWidget {
   static String routeName = '/create-room';
@@ -48,20 +47,13 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
               fontSize: 70,
               shadows: [
                 Shadow(
-                  color: Colors.blue,
+                  color: Colors.green,
                   blurRadius: 40,
                 ),
               ],
             ),
             const SizedBox(
               height: 60,
-            ),
-            Material(
-              child: CustomTextField(
-                  namecontroller: _controller, hintText: "Enter your Nickname"),
-            ),
-            const SizedBox(
-              height: 35,
             ),
             CustomButton(
                 onTap: () {

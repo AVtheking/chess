@@ -12,10 +12,11 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(boxShadow: [
+      // Change the color property to the shade of green you want
+      decoration: const BoxDecoration(color: Colors.lightGreen, boxShadow: [
         BoxShadow(
-          color: Colors.blue,
-          blurRadius: 5,
+          color: Colors.lightGreen, // Change the shadow color if needed
+          blurRadius: 10,
           spreadRadius: 0,
         )
       ]),

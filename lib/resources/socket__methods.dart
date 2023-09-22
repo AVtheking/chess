@@ -53,7 +53,7 @@ class SocketMethods {
 
   void movesListener(BuildContext context) {
     _socketClient.on("movesListner", (data) {
-      print(data);
+      // print(data);
       _ref.read(movesProvider.notifier).update((state) => data);
     });
   }

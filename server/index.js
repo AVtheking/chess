@@ -21,6 +21,10 @@ io.on("connection", (socket) => {
     socket.on("createRoom", async ({ nickname }) => {
         try {
             // console.log(nickname);
+            const existingRoom = await Room.findOne({ roomName });
+            if (existingRoom) {
+               return  socket.emit("error","Room already exists")
+            }
             let room = new Room();
             let player = {
                 socketId: socket.id,
