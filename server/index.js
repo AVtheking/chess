@@ -7,7 +7,7 @@ const server = http.createServer(app);
 // const io = require('socket.io')(server);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const Room = require('./model/room');
 const authRouter = require('./routes/auth');
 
@@ -108,8 +108,8 @@ io.on("connection", (socket) => {
     socket.on("checkmate", async ({ roomName, player }) => {
         try {
             socket.join(roomName);
-            // let room = await Room.deleteOne({ roomName });
-            // room = await room.save();
+            let room = await Room.deleteOne({ roomName });
+            // room = await room.save();S
             io.to(roomName).emit("endgame", player);
         } catch (e) {
             console.log(e);

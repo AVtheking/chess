@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiplayer_chess/resources/socket__methods.dart';
-import 'package:multiplayer_chess/responsive/responsive.dart';
 import 'package:multiplayer_chess/widget/custom_button.dart';
-import 'package:multiplayer_chess/widget/custom_text.dart';
 import 'package:multiplayer_chess/widget/custom_text_field.dart';
 
 class CreateRoomScreen extends ConsumerStatefulWidget {
@@ -35,39 +33,85 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Responsive(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CustomText(
-              text: "Create Room",
-              fontSize: 70,
-              shadows: [
-                Shadow(
-                  color: Colors.blue,
-                  blurRadius: 40,
-                ),
-              ],
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      // resizeToAvoidBottomInset: false,
+      body: Center(
+        child: ConstrainedBox(
+          constraints:
+              BoxConstraints(maxHeight: size.height * 0.8, maxWidth: 500),
+          child: SingleChildScrollView(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(boxShadow: [
+                      // BoxShadow(
+                      //   color: Color.fromARGB(255, 5, 75, 8),
+                      //   blurRadius: 0,
+                      //   spreadRadius: 0,
+                      // )
+                    ]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Image.asset(
+                        'assets/imgaes/chessBackground6.png',
+                        fit: size.width > 500 ? BoxFit.contain : BoxFit.contain,
+                        width: double.infinity,
+                        height: size.width > 500
+                            ? size.height * 0.5
+                            : size.height * 0.4,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        " Create Room ",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                          decoration: TextDecoration.none,
+                          shadows: [
+                            Shadow(color: Colors.green, blurRadius: 10),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Material(
+                      child: CustomTextField(
+                          namecontroller: _controller,
+                          hintText: "Enter Room name"),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 45,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: CustomButton(
+                        onTap: () {
+                          createRoom(_controller.text);
+                        },
+                        text: "Create"),
+                  )
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 60,
-            ),
-            Material(
-              child: CustomTextField(
-                  namecontroller: _controller, hintText: "Enter Room name"),
-            ),
-            const SizedBox(
-              height: 35,
-            ),
-            CustomButton(
-                onTap: () {
-                  createRoom(_controller.text);
-                },
-                text: "Create")
-          ],
+          ),
         ),
       ),
     );

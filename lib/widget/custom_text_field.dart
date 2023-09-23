@@ -15,21 +15,27 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Colors.blue,
-            blurRadius: 5,
-            spreadRadius: 2,
-          ),
-        ]),
-        child: TextField(
-            readOnly: isReadOnly,
-            controller: namecontroller,
-            decoration: InputDecoration(
-              fillColor: const Color.fromRGBO(
-                  13, 16, 34, 1), // Ensure 'bgColor' is defined correctly
-              filled: true,
-              hintText: hintText,
-            )));
+      decoration: const BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.yellow,
+          blurRadius: 5,
+          spreadRadius: 2,
+        ),
+      ]),
+      child: TextField(
+        style: const TextStyle(color: Colors.black),
+        readOnly: isReadOnly,
+        controller: namecontroller,
+        decoration: InputDecoration(
+          fillColor: const Color.fromARGB(
+              255, 194, 197, 175), // Ensure 'bgColor' is defined correctly
+          filled: true,
+
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.black),
+        ),
+      ),
+    );
   }
 }

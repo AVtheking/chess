@@ -1,43 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:multiplayer_chess/resources/socket__methods.dart';
-import 'package:multiplayer_chess/widget/custom_text.dart';
 
-class WatingLobby extends ConsumerStatefulWidget {
-  const WatingLobby({Key? key}) : super(key: key);
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _WatingLobbyState();
-}
-
-class _WatingLobbyState extends ConsumerState<WatingLobby> {
-  late TextEditingController controller;
-  @override
-  void initState() {
-    controller = TextEditingController(text: ref.read(roomProvider)!['_id']);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+class WaitingLobby extends StatelessWidget {
+  const WaitingLobby({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Stack(
+      fit: StackFit.expand,
       children: [
-        CustomText(text: "Wating for a player to join", fontSize: 19, shadows: [
-          Shadow(
-            color: Colors.blue,
-            blurRadius: 5,
+        // Background Image
+        Image.asset(
+          'assets/imgaes/chessBackground8.png', // Replace with your image asset path
+          fit: BoxFit
+              .fill, // Use BoxFit.cover to scale while maintaining aspect ratio
+        ),
+
+        // Centered Text
+        const Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              "Waiting for opponent to join!!",
+              style: TextStyle(
+                fontSize: 35,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Colors.blue,
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
+            ),
           ),
-        ]),
-        SizedBox(
-          height: 30,
         ),
       ],
     );

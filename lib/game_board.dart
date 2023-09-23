@@ -58,7 +58,7 @@ class _GameBoardState extends ConsumerState<GameBoard> {
 
     return Scaffold(
       body: roomData['isJoin']
-          ? const WatingLobby()
+          ? const WaitingLobby()
           : Center(
               child: ConstrainedBox(
                 constraints:
@@ -71,11 +71,19 @@ class _GameBoardState extends ConsumerState<GameBoard> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(player1 != null && player2 != null
-                              ? user.name == player1.nickname
-                                  ? player1.nickname
-                                  : player2.nickname
-                              : "Username"),
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    'assets/imgaes/chessBackground.png'),
+                              ),
+                              Text(player1 != null && player2 != null
+                                  ? user.name == player1.nickname
+                                      ? player1.nickname
+                                      : player2.nickname
+                                  : "Username"),
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 30,
@@ -121,11 +129,19 @@ class _GameBoardState extends ConsumerState<GameBoard> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(player1 != null && player2 != null
-                              ? user.name != player1.nickname
-                                  ? player1.nickname
-                                  : player2.nickname
-                              : "UserName"),
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    'assets/imgaes/chessBackground.png'),
+                              ),
+                              Text(player1 != null && player2 != null
+                                  ? user.name != player1.nickname
+                                      ? player1.nickname
+                                      : player2.nickname
+                                  : "UserName"),
+                            ],
+                          ),
                         ),
                       ],
                     ),

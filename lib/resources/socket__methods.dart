@@ -4,6 +4,7 @@ import 'package:multiplayer_chess/features/auth/authService.dart';
 import 'package:multiplayer_chess/features/auth/authService/models/player.dart';
 import 'package:multiplayer_chess/game_board.dart';
 import 'package:multiplayer_chess/resources/socket_client.dart';
+import 'package:multiplayer_chess/screen/main__menu_screen.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 final socketMethodsProvider = Provider((ref) => SocketMethods(ref: ref));
@@ -110,9 +111,10 @@ class SocketMethods {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.popUntil(context, (route) => false);
+                      Navigator.pushReplacementNamed(
+                          context, MainMenu.routeName);
                     },
-                    child: const Text("On"))
+                    child: const Text("Ok"))
               ],
             );
           });
