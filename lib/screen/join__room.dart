@@ -22,12 +22,14 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
   final TextEditingController namecontroller = TextEditingController();
   final TextEditingController idController = TextEditingController();
   void joinRoom(String nickname, String roomId) {
-    ref.watch(socketMethodsProvider).joinRoom(nickname, roomId);
+    ref.watch(socketMethodsProvider).joinRoom(roomId);
   }
 
   @override
   void initState() {
     ref.read(socketMethodsProvider).joinRoomSuccessListener(context);
+    ref.read(socketMethodsProvider).updatePlayerListener(context);
+
     super.initState();
   }
 
@@ -56,14 +58,6 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
             ),
             const SizedBox(
               height: 60,
-            ),
-            Material(
-              child: CustomTextField(
-                  namecontroller: namecontroller,
-                  hintText: "Enter your nickname"),
-            ),
-            const SizedBox(
-              height: 35,
             ),
             Material(
               child: CustomTextField(

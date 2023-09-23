@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(authRouter);
 io.on("connection", (socket) => {
     console.log("connected", socket.id);
+<<<<<<< HEAD
     socket.on("createRoom", async ({ nickname }) => {
         try {
             // console.log(nickname);
@@ -26,6 +27,20 @@ io.on("connection", (socket) => {
                return  socket.emit("error","Room already exists")
             }
             let room = new Room();
+=======
+    socket.on("createRoom", async ({ roomName,nickname }) => {
+        try {
+            console.log(nickname);
+            const existingRoom = await Room.findOne({ roomName });
+            if (existingRoom) {
+                console.log("Room already exists");
+                socket.emit("error", "Room already exists");
+                return;
+            }
+            let room = new Room({
+                roomName
+            });
+>>>>>>> 7efa588 (ui improved)
             let player = {
                 socketId: socket.id,
                 nickname,
@@ -41,6 +56,7 @@ io.on("connection", (socket) => {
         }
     });
 
+<<<<<<< HEAD
     socket.on("joinRoom", async ({ nickname, roomId }) => {
         try {
             if (!roomId.match(/^[0-9a-fA-F]{24}$/)) {
@@ -50,6 +66,11 @@ io.on("connection", (socket) => {
             }
             
             let room = await Room.findById(roomId);
+=======
+    socket.on("joinRoom", async ({ nickname, roomName }) => {
+        try {
+            let room = await Room.findOne({roomName});
+>>>>>>> 7efa588 (ui improved)
             if (room.isJoin)
             {
                 let player = {
@@ -58,14 +79,24 @@ io.on("connection", (socket) => {
                     playertype:'b'
 
 
+<<<<<<< HEAD
                 }
+=======
+
+                }
+                const roomId = room._id.toString;
+>>>>>>> 7efa588 (ui improved)
                 room.players.push(player);
                 socket.join(roomId);
                 room.isJoin = false;
                 room = await room.save();
 
                 io.to(roomId).emit("joinRoomSuccess", room);
+<<<<<<< HEAD
                 io.to(roomId).emit("updatePlayers", room);
+=======
+                io.to(roomId).emit("updatePlayers", room.players);
+>>>>>>> 7efa588 (ui improved)
                 io.to(roomId).emit("updateRoom", room);
 
 
