@@ -4,6 +4,7 @@ import 'package:multiplayer_chess/features/auth/authService.dart';
 import 'package:multiplayer_chess/features/auth/authService/models/player.dart';
 import 'package:multiplayer_chess/game_board.dart';
 import 'package:multiplayer_chess/resources/socket_client.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 final socketMethodsProvider = Provider((ref) => SocketMethods(ref: ref));
 final roomProvider = StateProvider<Map<String, dynamic>?>((ref) => null);
@@ -17,6 +18,7 @@ class SocketMethods {
   SocketMethods({required Ref ref}) : _ref = ref;
 
   final _socketClient = SocketClient.instance.socket!;
+  Socket get socketClient => _socketClient;
 
   void createRoom(String roomName) {
     final user = _ref.read(userProvider)!;
@@ -38,7 +40,13 @@ class SocketMethods {
 
   void moves(String fen, String roomId) {
     _socketClient.emit("move", {
-      {"roomId": roomId, "fen": fen}
+      {"roomName": roomId, "fen": fen}
+    });
+  }
+
+  void checkmate(String player, String roomName) {
+    _socketClient.emit("checkmate", {
+      {"roomName": roomName, "player": player}
     });
   }
 
@@ -52,8 +60,9 @@ class SocketMethods {
   }
 
   void joinRoomSuccessListener(BuildContext context) {
-    _socketClient.on("joinRoomSuccess", (data) {
-      _ref.read(roomProvider.notifier).update((state) => data);
+    // print('called');
+    _socketClient.on("joinRoomSuccess", (roomData) {
+      _ref.read(roomProvider.notifier).update((state) => roomData);
       Navigator.pushNamed(context, GameBoard.routeName);
     });
   }
@@ -61,12 +70,13 @@ class SocketMethods {
   void movesListener(BuildContext context) {
     _socketClient.on("movesListner", (data) {
       // print(data);
-      _ref.read(movesProvider.notifier).update((state) => data);
+      _ref.read(movesProvider.notifier).update((state) => data['fen']);
+      _ref.read(roomProvider.notifier).update((state) => data['room']);
     });
   }
 
   void updatePlayerListener(BuildContext context) {
-    print("here");
+    // print("here");
     _socketClient.on("updatePlayers", (playerData) {
       _ref
           .read(player1Provider.notifier)
@@ -78,10 +88,34 @@ class SocketMethods {
   }
 
   void updateRoomListener(BuildContext context) {
-    print("here");
+    // print("here");
     _socketClient.on("updateRoom", (room) {
-      print(room.toString());
+      // print(room.toString());
       _ref.read(roomProvider.notifier).update((state) => room);
+    });
+  }
+
+  void endgameListener(BuildContext context) {
+    _socketClient.on("endgame", (player) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              backgroundColor: Colors.green,
+              title: const Text("Game End"),
+              content: Text(
+                "$player won ",
+                style: const TextStyle(color: Colors.white),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.popUntil(context, (route) => false);
+                    },
+                    child: const Text("On"))
+              ],
+            );
+          });
     });
   }
 }

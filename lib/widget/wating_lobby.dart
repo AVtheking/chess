@@ -26,20 +26,17 @@ class _WatingLobbyState extends ConsumerState<WatingLobby> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const CustomText(
-            text: "Wating for a player to join",
-            fontSize: 19,
-            shadows: [
-              Shadow(
-                color: Colors.blue,
-                blurRadius: 5,
-              ),
-            ]),
-        const SizedBox(
+        CustomText(text: "Wating for a player to join", fontSize: 19, shadows: [
+          Shadow(
+            color: Colors.blue,
+            blurRadius: 5,
+          ),
+        ]),
+        SizedBox(
           height: 30,
         ),
       ],

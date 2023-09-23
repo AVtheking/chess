@@ -1,19 +1,21 @@
 const mongoose = require('mongoose');
 const playerSchema = require('./player');
 const roomSchema = mongoose.Schema({
-<<<<<<< HEAD
-=======
     roomName: {
         required: true,
         type: String,
         
     },
->>>>>>> 7efa588 (ui improved)
     occupancy: {
         type: Number,
         default: 2
     },
     players: [playerSchema],
+    turn: playerSchema,
+    turnIndex: {
+        type: Number,
+        default:0
+    },
     isJoin: {
         type: Boolean,
         default: true

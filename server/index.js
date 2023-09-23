@@ -18,16 +18,6 @@ app.use(express.json());
 app.use(authRouter);
 io.on("connection", (socket) => {
     console.log("connected", socket.id);
-<<<<<<< HEAD
-    socket.on("createRoom", async ({ nickname }) => {
-        try {
-            // console.log(nickname);
-            const existingRoom = await Room.findOne({ roomName });
-            if (existingRoom) {
-               return  socket.emit("error","Room already exists")
-            }
-            let room = new Room();
-=======
     socket.on("createRoom", async ({ roomName,nickname }) => {
         try {
             console.log(nickname);
@@ -40,37 +30,25 @@ io.on("connection", (socket) => {
             let room = new Room({
                 roomName
             });
->>>>>>> 7efa588 (ui improved)
             let player = {
                 socketId: socket.id,
                 nickname,
                 playertype:"w"
             }
+            room.turn = player;
             room.players.push(player);
             room = await room.save();
-            const roomId = room._id.toString();
-            socket.join(roomId);
-            io.to(roomId).emit("createRoomSuccess", room);
+            // const roomId = room._id.toString();
+            socket.join(roomName);
+            io.to(roomName).emit("createRoomSuccess", room);
         } catch (e) {
             console.error(e);
         }
-    });
+    })
 
-<<<<<<< HEAD
-    socket.on("joinRoom", async ({ nickname, roomId }) => {
-        try {
-            if (!roomId.match(/^[0-9a-fA-F]{24}$/)) {
-                socket.emit("error", "Please enter the valid room id");
-                console.log("please enter room id");
-                return; 
-            }
-            
-            let room = await Room.findById(roomId);
-=======
     socket.on("joinRoom", async ({ nickname, roomName }) => {
         try {
             let room = await Room.findOne({roomName});
->>>>>>> 7efa588 (ui improved)
             if (room.isJoin)
             {
                 let player = {
@@ -79,25 +57,17 @@ io.on("connection", (socket) => {
                     playertype:'b'
 
 
-<<<<<<< HEAD
-                }
-=======
 
                 }
-                const roomId = room._id.toString;
->>>>>>> 7efa588 (ui improved)
+                // const roomId = room._id.toString;
+                socket.join(roomName);
                 room.players.push(player);
-                socket.join(roomId);
                 room.isJoin = false;
                 room = await room.save();
 
-                io.to(roomId).emit("joinRoomSuccess", room);
-<<<<<<< HEAD
-                io.to(roomId).emit("updatePlayers", room);
-=======
-                io.to(roomId).emit("updatePlayers", room.players);
->>>>>>> 7efa588 (ui improved)
-                io.to(roomId).emit("updateRoom", room);
+                io.to(roomName).emit("joinRoomSuccess", room);
+                io.to(roomName).emit("updatePlayers", room.players);
+                io.to(roomName).emit("updateRoom", room);
 
 
             }
@@ -110,16 +80,38 @@ io.on("connection", (socket) => {
             console.error(e);
         }
     })
-    socket.on("move", async ({ roomId,fen}) => {
+    socket.on("move", async ({ roomName,fen}) => {
         
         try {
-            
-           
-            socket.join(roomId);
-            io.to(roomId).emit("movesListner", fen);
+            socket.join(roomName);
+            let room = await Room.findOne({ roomName });
+            if (room.turnIndex == 0) {
+                room.turnIndex = 1;
+                room.turn = room.players[1];
+            }
+            else {
+                room.turnIndex = 0;
+                room.turn=room.players[0]
+            }
+            room = await room.save();
+            io.to(roomName).emit("movesListner", {
+                fen,
+                room,
+
+            });
             
         }
         catch (e) {
+            console.log(e);
+        }
+    })
+    socket.on("checkmate", async ({ roomName, player }) => {
+        try {
+            socket.join(roomName);
+            // let room = await Room.deleteOne({ roomName });
+            // room = await room.save();
+            io.to(roomName).emit("endgame", player);
+        } catch (e) {
             console.log(e);
         }
     })

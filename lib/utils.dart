@@ -31,9 +31,9 @@ String? getRandomMove(String fen) {
   return move.first;
 }
 
-void checkmate(String fen, BuildContext context) {
+bool checkmate(String fen, BuildContext context) {
   final chess = ch.Chess.fromFEN(fen);
-  if (chess.in_checkmate) {}
+  return chess.in_checkmate;
 }
 
 const bgColor = Color.fromRGBO(13, 16, 34, 1);

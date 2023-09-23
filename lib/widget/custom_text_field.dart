@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
             readOnly: isReadOnly,
             controller: namecontroller,
             decoration: InputDecoration(
-              fillColor: Color.fromRGBO(
+              fillColor: const Color.fromRGBO(
                   13, 16, 34, 1), // Ensure 'bgColor' is defined correctly
               filled: true,
               hintText: hintText,

@@ -24,7 +24,7 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
 
   @override
   void initState() {
-    ref.read(socketMethodsProvider).createRoomSuccess(context);
+    ref.read(socketMethodsProvider).createRoomSuccessListenere(context);
 
     super.initState();
   }
@@ -57,7 +57,7 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
             ),
             Material(
               child: CustomTextField(
-                  namecontroller: _controller, hintText: "Enter your Nickname"),
+                  namecontroller: _controller, hintText: "Enter Room name"),
             ),
             const SizedBox(
               height: 35,

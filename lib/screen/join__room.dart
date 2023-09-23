@@ -23,6 +23,7 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
   final TextEditingController idController = TextEditingController();
   void joinRoom(String nickname, String roomId) {
     ref.watch(socketMethodsProvider).joinRoom(roomId);
+    setState(() {});
   }
 
   @override
