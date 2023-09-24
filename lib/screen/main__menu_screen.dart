@@ -35,7 +35,7 @@ class MainMenu extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: Image.asset(
-                    'assets/imgaes/chessBackground4.png',
+                    'assets/imgaes/chessBackground1.png',
                     fit: size.width > 500 ? BoxFit.cover : BoxFit.contain,
                     width: double.infinity,
                     height: size.width > 500
@@ -82,8 +82,7 @@ class MainMenu extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                         elevation: 10,
-                        backgroundColor:
-                            const Color.fromARGB(255, 197, 178, 14),
+                        backgroundColor: Color.fromARGB(255, 14, 145, 197),
                         minimumSize: const Size(double.infinity, 60)),
                     child: const Text(
                       "Create Room",
@@ -106,10 +105,10 @@ class MainMenu extends StatelessWidget {
                 child: Container(
                   decoration: const BoxDecoration(boxShadow: [
                     BoxShadow(
-                      color: Colors
-                          .lightGreen, // Change the shadow color if needed
-                      blurRadius: 10,
-                      spreadRadius: 0,
+                      color: Color.fromARGB(255, 8, 135,
+                          157), // Change the shadow color if needed
+                      blurRadius: 5,
+                      spreadRadius: 3,
                     )
                   ]),
                   child: ElevatedButton(
@@ -119,13 +118,13 @@ class MainMenu extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         elevation: 10,
                         backgroundColor:
-                            const Color.fromARGB(255, 197, 178, 14),
+                            const Color.fromARGB(255, 194, 197, 175),
                         minimumSize: const Size(double.infinity, 60)),
                     child: const Text(
                       "Join Room",
                       style: TextStyle(
                           fontSize: 23,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                           shadows: [
                             Shadow(color: Colors.yellow, blurRadius: 2)

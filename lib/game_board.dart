@@ -18,7 +18,7 @@ class GameBoard extends ConsumerStatefulWidget {
 class _GameBoardState extends ConsumerState<GameBoard> {
   @override
   void initState() {
-    print("this done");
+    // print("this done");
 
     ref.read(socketMethodsProvider).updateRoomListener(context);
     ref.read(socketMethodsProvider).updatePlayerListener(context);
@@ -77,11 +77,18 @@ class _GameBoardState extends ConsumerState<GameBoard> {
                                 backgroundImage: AssetImage(
                                     'assets/imgaes/chessBackground.png'),
                               ),
-                              Text(player1 != null && player2 != null
-                                  ? user.name == player1.nickname
-                                      ? player1.nickname
-                                      : player2.nickname
-                                  : "Username"),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                player1 != null && player2 != null
+                                    ? user.name != player1.nickname
+                                        ? player1.nickname
+                                        : player2.nickname
+                                    : "Username",
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
@@ -135,11 +142,18 @@ class _GameBoardState extends ConsumerState<GameBoard> {
                                 backgroundImage: AssetImage(
                                     'assets/imgaes/chessBackground.png'),
                               ),
-                              Text(player1 != null && player2 != null
-                                  ? user.name != player1.nickname
-                                      ? player1.nickname
-                                      : player2.nickname
-                                  : "UserName"),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                player1 != null && player2 != null
+                                    ? user.name == player1.nickname
+                                        ? player1.nickname
+                                        : player2.nickname
+                                    : "UserName",
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),

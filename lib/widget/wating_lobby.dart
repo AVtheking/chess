@@ -18,7 +18,7 @@ class WaitingLobby extends StatelessWidget {
         // Centered Text
         const Center(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Text(
               "Waiting for opponent to join!!",
               style: TextStyle(
