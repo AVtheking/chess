@@ -128,8 +128,6 @@ class SocketMethods {
                     alignment: Alignment.bottomRight,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
                         Navigator.pushReplacementNamed(
                             context, MainMenu.routeName);
                         final room = _ref.read(roomProvider);

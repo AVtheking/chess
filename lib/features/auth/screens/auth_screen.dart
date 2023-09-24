@@ -52,14 +52,14 @@ class _AuthScreeenState extends ConsumerState<AuthScreen> {
               BoxConstraints(maxHeight: size.height * 0.9, maxWidth: 500),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Column(
                 children: [
                   Container(
                     decoration: const BoxDecoration(boxShadow: [
                       // BoxShadow(
                       //   color: Color.fromARGB(255, 5, 75, 8),
-                      //   blurRadius: 0,
+                      //   blurRadius: 0,r̥ṅ
                       //   spreadRadius: 0,
                       // )
                     ]),
