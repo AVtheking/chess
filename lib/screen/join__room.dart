@@ -46,7 +46,7 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
         children: [
           // Background Image
           Image.asset(
-            'assets/imgaes/chessBackground9.png', // Replace with your image asset path
+            'assets/imgaes/chessBackground8.png', // Replace with your image asset path
             fit: BoxFit.cover,
           ),
 
@@ -71,11 +71,11 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
                           Text(
                             " Join Room ",
                             style: TextStyle(
-                              fontSize: 50,
+                              fontSize: 55,
                               color: Colors.white,
                               decoration: TextDecoration.none,
                               shadows: [
-                                Shadow(color: Colors.green, blurRadius: 15),
+                                Shadow(color: Colors.blue, blurRadius: 15),
                               ],
                             ),
                           ),
@@ -88,19 +88,17 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
                         margin: const EdgeInsets.symmetric(horizontal: 10),
                         decoration: const BoxDecoration(boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 9, 202, 199),
+                            color: Colors.yellow,
                             blurRadius: 5,
-                            spreadRadius: 1,
+                            spreadRadius: 2,
                           ),
                         ]),
                         child: TextField(
                           style: const TextStyle(color: Colors.black),
                           controller: idController,
                           decoration: const InputDecoration(
-                            fillColor: Color.fromARGB(255, 216, 228,
-                                229), // Ensure 'bgColor' is defined correctly
+                            fillColor: const Color.fromARGB(255, 194, 197, 175),
                             filled: true,
-
                             border: InputBorder.none,
                             hintText: "Enter Room Name",
                             hintStyle: TextStyle(color: Colors.black),
@@ -117,8 +115,8 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
                             color: Colors.lightGreen,
                             boxShadow: [
                               BoxShadow(
-                                color: Color.fromARGB(255, 4, 232,
-                                    209), // Change the shadow color if needed
+                                color: Color.fromARGB(255, 205, 214,
+                                    213), // Change the shadow color if needed
                                 blurRadius: 10,
                                 spreadRadius: 0,
                               )
@@ -129,11 +127,15 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  Color.fromARGB(255, 47, 151, 221),
+                                  Color.fromARGB(255, 182, 218, 37),
                               minimumSize: const Size(double.infinity, 55)),
                           child: const Text(
                             "Join Room",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18, shadows: [
+                              Shadow(
+                                  color: Color.fromARGB(255, 228, 190, 133),
+                                  blurRadius: 5)
+                            ]),
                           ),
                         ),
                       )

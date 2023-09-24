@@ -70,7 +70,7 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
                               color: Colors.white,
                               decoration: TextDecoration.none,
                               shadows: [
-                                Shadow(color: Colors.green, blurRadius: 15),
+                                Shadow(color: Colors.blue, blurRadius: 15),
                               ],
                             ),
                           ),
