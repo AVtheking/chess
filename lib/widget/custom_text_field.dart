@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController namecontroller;
   final String hintText;
-  final bool isReadOnly;
+  final bool isObscureText;
 
   const CustomTextField(
       {Key? key, // Use 'key' instead of 'super.key'
       required this.namecontroller,
       required this.hintText,
-      this.isReadOnly = false})
+      this.isObscureText = false})
       : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
       ]),
       child: TextField(
         style: const TextStyle(color: Colors.black),
-        readOnly: isReadOnly,
+        obscureText: isObscureText,
         controller: namecontroller,
         decoration: InputDecoration(
           fillColor: const Color.fromARGB(

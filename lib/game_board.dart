@@ -24,6 +24,7 @@ class _GameBoardState extends ConsumerState<GameBoard> {
     ref.read(socketMethodsProvider).updatePlayerListener(context);
     ref.read(socketMethodsProvider).movesListener(context);
     ref.read(socketMethodsProvider).endgameListener(context);
+    ref.read(socketMethodsProvider).errorListnere(context);
 
     setState(() {});
 
@@ -49,7 +50,7 @@ class _GameBoardState extends ConsumerState<GameBoard> {
     if (checkmate(_fen, context)) {
       final chess = ch.Chess.fromFEN(_fen);
       final winner =
-          chess.turn == ch.Color.WHITE ? player1!.nickname : player2!.nickname;
+          chess.turn == ch.Color.WHITE ? player2!.nickname : player1!.nickname;
       ref.watch(socketMethodsProvider).checkmate(
             winner,
             roomData['roomName'],

@@ -111,6 +111,7 @@ class _AuthScreeenState extends ConsumerState<AuthScreen> {
                               )
                             ]),
                             child: TextField(
+                              // obscureText: true,
                               controller: _emailController,
                               decoration: const InputDecoration(
                                   focusedBorder: OutlineInputBorder(
@@ -140,6 +141,7 @@ class _AuthScreeenState extends ConsumerState<AuthScreen> {
                             ]),
                             child: TextField(
                               controller: _passwordController,
+                              obscureText: true,
                               decoration: const InputDecoration(
                                   filled: true,
                                   fillColor: Color.fromARGB(255, 71, 106, 6),

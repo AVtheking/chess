@@ -26,6 +26,7 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
   void initState() {
     ref.read(socketMethodsProvider).joinRoomSuccessListener(context);
     ref.read(socketMethodsProvider).updatePlayerListener(context);
+    ref.read(socketMethodsProvider).errorListnere(context);
 
     super.initState();
   }

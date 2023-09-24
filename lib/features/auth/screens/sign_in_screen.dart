@@ -171,6 +171,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             ]),
                             child: TextField(
                               controller: _passwordController,
+                              obscureText: true,
                               decoration: InputDecoration(
                                   filled: true,
                                   fillColor: fieldColor,

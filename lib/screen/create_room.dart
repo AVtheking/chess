@@ -24,6 +24,7 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
   @override
   void initState() {
     ref.read(socketMethodsProvider).createRoomSuccessListenere(context);
+    ref.read(socketMethodsProvider).errorListnere(context);
     super.initState();
   }
 

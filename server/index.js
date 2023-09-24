@@ -12,7 +12,7 @@ const Room = require('./model/room');
 const authRouter = require('./routes/auth');
 
 
-const DB = "mongodb+srv://Ankit:Ankit123@chess.yrpq0tb.mongodb.net/?retryWrites=true&w=majority"
+const DB = "mongodb+srv://user1:1234@chess.yrpq0tb.mongodb.net/?retryWrites=true&w=majority"
 app.use(express.json());
 
 app.use(authRouter);
@@ -25,9 +25,10 @@ io.on("connection", (socket) => {
             if (existingRoom) {
                 console.log("Room already exists");
                 socket.emit("error", "Room already exists");
-                return;
+
             }
-            let room = new Room({
+            else
+           { let room = new Room({
                 roomName
             });
             let player = {
@@ -40,7 +41,7 @@ io.on("connection", (socket) => {
             room = await room.save();
             // const roomId = room._id.toString();
             socket.join(roomName);
-            io.to(roomName).emit("createRoomSuccess", room);
+            io.to(roomName).emit("createRoomSuccess", room);}
         } catch (e) {
             console.error(e);
         }

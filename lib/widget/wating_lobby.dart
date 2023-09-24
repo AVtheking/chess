@@ -10,27 +10,39 @@ class WaitingLobby extends StatelessWidget {
       children: [
         // Background Image
         Image.asset(
-          'assets/imgaes/chessBackground8.png', // Replace with your image asset path
+          'assets/imgaes/chessBackground9.png', // Replace with your image asset path
           fit: BoxFit
-              .fill, // Use BoxFit.cover to scale while maintaining aspect ratio
+              .cover, // Use BoxFit.cover to scale while maintaining aspect ratio
         ),
 
         // Centered Text
         const Center(
           child: Padding(
             padding: EdgeInsets.all(10.0),
-            child: Text(
-              "Waiting for opponent to join!!",
-              style: TextStyle(
-                fontSize: 35,
-                color: Colors.white,
-                shadows: [
-                  Shadow(
-                    color: Colors.blue,
-                    blurRadius: 5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LinearProgressIndicator(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: Text(
+                    "Waiting for opponent to join..",
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          color: Color.fromARGB(255, 7, 134, 219),
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

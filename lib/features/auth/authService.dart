@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:multiplayer_chess/constants/error_handling.dart';
 import 'package:multiplayer_chess/constants/utils.dart';
+import 'package:multiplayer_chess/features/auth/screens/auth_screen.dart';
 import 'package:multiplayer_chess/model/user.dart';
 import 'package:multiplayer_chess/screen/main__menu_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,6 +45,7 @@ class AuthService {
           context: context,
           onSuccess: () {
             showSnackBar(context, "Account Created Successfully");
+            Navigator.pushNamed(context, AuthScreen.routeName);
           },
           response: response);
     } catch (e) {

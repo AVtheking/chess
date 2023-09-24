@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multiplayer_chess/constants/utils.dart';
 import 'package:multiplayer_chess/features/auth/authService.dart';
 import 'package:multiplayer_chess/features/auth/authService/models/player.dart';
 import 'package:multiplayer_chess/game_board.dart';
@@ -56,7 +57,7 @@ class SocketMethods {
     _socketClient.on("createRoomSuccess", (room) {
       _ref.read(roomProvider.notifier).update((state) => room);
       // print(room);
-      Navigator.pushNamed(context, GameBoard.routeName);
+      Navigator.pushReplacementNamed(context, GameBoard.routeName);
     });
   }
 
@@ -64,7 +65,7 @@ class SocketMethods {
     // print('called');
     _socketClient.on("joinRoomSuccess", (roomData) {
       _ref.read(roomProvider.notifier).update((state) => roomData);
-      Navigator.pushNamed(context, GameBoard.routeName);
+      Navigator.pushReplacementNamed(context, GameBoard.routeName);
     });
   }
 
@@ -102,23 +103,69 @@ class SocketMethods {
           context: context,
           builder: (context) {
             return AlertDialog(
-              backgroundColor: Colors.green,
-              title: const Text("Game End"),
-              content: Text(
-                "$player won ",
-                style: const TextStyle(color: Colors.white),
+              backgroundColor: Colors.white,
+              title: const Text(
+                "Game Ended!",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green, // Customize the title color
+                ),
               ),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                      Navigator.pushReplacementNamed(
-                          context, MainMenu.routeName);
-                    },
-                    child: const Text("Ok"))
-              ],
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "$player won", // Replace with the actual player's name
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black, // Customize the content color
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
+                        Navigator.pushReplacementNamed(
+                            context, MainMenu.routeName);
+                        final room = _ref.read(roomProvider);
+                        room!['isJoin'] = true;
+                        _ref
+                            .read(roomProvider.notifier)
+                            .update((state) => room);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.blue, // Customize the button color
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                      ),
+                      child: const Text(
+                        "OK",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           });
     });
+  }
+
+  void errorListnere(BuildContext context) {
+    _socketClient.on(
+      "error",
+      (error) => {
+        showSnackBar(context, error),
+      },
+    );
   }
 }
