@@ -17,15 +17,16 @@ class JoinRoomScreen extends ConsumerStatefulWidget {
 class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
   final TextEditingController namecontroller = TextEditingController();
   final TextEditingController idController = TextEditingController();
-  void joinRoom(String roomId) {
-    ref.watch(socketMethodsProvider).joinRoom(roomId);
+  void joinRoom(String gameId) {
+    print(gameId);
+    ref.watch(socketMethodsProvider).joinRoom(gameId);
     setState(() {});
   }
 
   @override
   void initState() {
     ref.read(socketMethodsProvider).joinRoomSuccessListener(context);
-    ref.read(socketMethodsProvider).updatePlayerListener(context);
+    // ref.read(socketMethodsProvider).updatePlayerListener(context);
     ref.read(socketMethodsProvider).errorListnere(context);
 
     super.initState();
@@ -98,7 +99,7 @@ class _JoinRoomScreenState extends ConsumerState<JoinRoomScreen> {
                           style: const TextStyle(color: Colors.black),
                           controller: idController,
                           decoration: const InputDecoration(
-                            fillColor: const Color.fromARGB(255, 194, 197, 175),
+                            fillColor: Color.fromARGB(255, 194, 197, 175),
                             filled: true,
                             border: InputBorder.none,
                             hintText: "Enter Room Name",

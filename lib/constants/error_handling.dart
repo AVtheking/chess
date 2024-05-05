@@ -8,17 +8,10 @@ void httpErrorhandling(
     {required BuildContext context,
     required VoidCallback onSuccess,
     required http.Response response}) {
-  switch (response.statusCode) {
-    case 200:
-      onSuccess();
-      break;
-    case 400:
-      showSnackBar(context, jsonDecode(response.body)['msg']);
-      break;
-    case 500:
-      showSnackBar(context, jsonDecode(response.body)['error']);
-      break;
-    default:
-      showSnackBar(context, response.body);
+  bool success = jsonDecode(response.body)['success'];
+  if (success) {
+    onSuccess();
+  } else {
+    showSnackBar(context, jsonDecode(response.body)['message']);
   }
 }

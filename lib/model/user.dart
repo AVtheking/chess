@@ -2,59 +2,47 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class User {
-  final String id;
-  final String name;
-  final String email;
-  final String password;
-  final String token;
-  final String type;
+  final String? id;
+  final String? username;
+  final String? email;
+  final String? password;
 
   User({
     required this.id,
-    required this.name,
+    required this.username,
     required this.email,
     required this.password,
-    required this.token,
-    required this.type,
   });
 
   User copyWith({
     String? id,
-    String? name,
+    String? username,
     String? email,
     String? password,
-    String? token,
-    String? type,
   }) {
     return User(
       id: id ?? this.id,
-      name: name ?? this.name,
+      username: username ?? this.username,
       email: email ?? this.email,
       password: password ?? this.password,
-      token: token ?? this.token,
-      type: type ?? this.type,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'name': name,
+      'username': username,
       'email': email,
       'password': password,
-      'token': token,
-      'type': type,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['_id'] as String,
-      name: map['name'] as String,
-      email: map['email'] as String,
-      password: map['password'] as String,
-      token: map['token'] as String,
-      type: map['type'] as String ?? '',
+      id: map['id'] != null ? map['id'] as String : null,
+      username: map['username'] != null ? map['username'] as String : null,
+      email: map['email'] != null ? map['email'] as String : null,
+      password: map['password'] != null ? map['password'] as String : null,
     );
   }
 
@@ -62,4 +50,24 @@ class User {
 
   factory User.fromJson(String source) =>
       User.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'User(id: $id, username: $username, email: $email, password: $password)';
+  }
+
+  @override
+  bool operator ==(covariant User other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.username == username &&
+        other.email == email &&
+        other.password == password;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^ username.hashCode ^ email.hashCode ^ password.hashCode;
+  }
 }

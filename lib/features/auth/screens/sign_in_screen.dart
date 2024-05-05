@@ -29,11 +29,17 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   }
 
   void signUpUser(BuildContext context) {
+    // var google = GoogleAuth(context: context);
+    // google.handleSignIn();
     ref.watch(authServiceProvider).signUpUser(
         context: context,
         username: _nameController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text.trim());
+  }
+
+  void googleSignUp(BuildContext context) async {
+    ref.watch(authServiceProvider).handleSignIn(context);
   }
 
   @override
@@ -47,7 +53,6 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           "Multiplayer Chess",
           style: TextStyle(fontSize: 25),
         ),
-        // centerTitle: true,
       ),
       body: Center(
         child: ConstrainedBox(
@@ -234,7 +239,27 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         )
                       ],
                     ),
-                  )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Login with ",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          GestureDetector(
+                            onTap: () => googleSignUp(context),
+                            child: const Text(
+                              "Google",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          )
+                        ],
+                      ))
                 ],
               ),
             ),
