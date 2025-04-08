@@ -4,6 +4,8 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
+
         {
             "name": "multiplayer_chess",
             "request": "launch",
@@ -34,6 +36,13 @@
             "type": "dart",
             "deviceId": "emulator-5554"
         },
+        {
+            "name": "Redmi",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "bbf3dafd7022"
+        
+        }
     ],
     
     "compounds": [

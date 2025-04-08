@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "411410540967",
+    "project_id": "chess-b775c",
+    "storage_bucket": "chess-b775c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411410540967:android:223076ab16a7c420432e82",
+        "android_client_info": {
+          "package_name": "com.example.multiplayer_chess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411410540967-hved1803mp9snkq8hqkupr1690d2mc03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.multiplayer_chess",
+            "certificate_hash": "d6104f419d342eb51b5650dfdfe12c05382b54b7"
+          }
+        },
+        {
+          "client_id": "411410540967-aldcr46ppupoipcnat06cqkt7khkmun0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsfJYUND1dURW9lKZSQ6eTJ6pZe0hnOWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411410540967-aldcr46ppupoipcnat06cqkt7khkmun0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "411410540967-4c2u9vbsa34sakvldc836e4sj69ve52l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.multiplayerChess"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

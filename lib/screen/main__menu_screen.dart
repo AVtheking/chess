@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:multiplayer_chess/game_board.dart';
 import 'package:multiplayer_chess/resources/socket__methods.dart';
 import 'package:multiplayer_chess/responsive/responsive.dart';
 import 'package:multiplayer_chess/screen/create_room.dart';
@@ -20,7 +19,7 @@ class MainMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final room = ref.watch(roomProvider);
+    final gameId = ref.watch(gameIdProvider);
     return Responsive(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -76,7 +75,7 @@ class MainMenu extends ConsumerWidget {
                     BoxShadow(
                       color: Colors
                           .lightGreen, // Change the shadow color if needed
-                      blurRadius: 10,
+                      blurRadius: 20,
                       spreadRadius: 0,
                     )
                   ]),
@@ -86,7 +85,8 @@ class MainMenu extends ConsumerWidget {
                     },
                     style: ElevatedButton.styleFrom(
                         elevation: 10,
-                        backgroundColor: Color.fromARGB(255, 14, 145, 197),
+                        backgroundColor:
+                            const Color.fromARGB(255, 14, 145, 197),
                         minimumSize: const Size(double.infinity, 60)),
                     child: const Text(
                       "Create Room",
@@ -111,8 +111,8 @@ class MainMenu extends ConsumerWidget {
                     BoxShadow(
                       color: Color.fromARGB(255, 8, 135,
                           157), // Change the shadow color if needed
-                      blurRadius: 5,
-                      spreadRadius: 3,
+                      blurRadius: 20,
+                      spreadRadius: 1,
                     )
                   ]),
                   child: ElevatedButton(
@@ -140,43 +140,43 @@ class MainMenu extends ConsumerWidget {
               const SizedBox(
                 height: 20,
               ),
-              if (room != null && !room['isJoin'])
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 8, 135, 157),
-                          blurRadius: 5,
-                          spreadRadius: 3,
-                        )
-                      ],
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, GameBoard.routeName);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 10,
-                        backgroundColor:
-                            const Color.fromARGB(255, 194, 197, 175),
-                        minimumSize: const Size(double.infinity, 60),
-                      ),
-                      child: const Text(
-                        "Resume Game",
-                        style: TextStyle(
-                          fontSize: 23,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(color: Colors.yellow, blurRadius: 2)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+              // if (room != null && !room['isJoin'])
+              //   Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Container(
+              //       decoration: const BoxDecoration(
+              //         boxShadow: [
+              //           BoxShadow(
+              //             color: Color.fromARGB(255, 8, 135, 157),
+              //             blurRadius: 5,
+              //             spreadRadius: 3,
+              //           )
+              //         ],
+              //       ),
+              //       child: ElevatedButton(
+              //         onPressed: () {
+              //           Navigator.pushNamed(context, GameBoard.routeName);
+              //         },
+              //         style: ElevatedButton.styleFrom(
+              //           elevation: 10,
+              //           backgroundColor:
+              //               const Color.fromARGB(255, 194, 197, 175),
+              //           minimumSize: const Size(double.infinity, 60),
+              //         ),
+              //         child: const Text(
+              //           "Resume Game",
+              //           style: TextStyle(
+              //             fontSize: 23,
+              //             color: Colors.black,
+              //             fontWeight: FontWeight.bold,
+              //             shadows: [
+              //               Shadow(color: Colors.yellow, blurRadius: 2)
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
             ],
           ),
         ),

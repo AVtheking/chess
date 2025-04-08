@@ -1,14 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiplayer_chess/features/auth/authService.dart';
 import 'package:multiplayer_chess/features/auth/screens/auth_screen.dart';
+import 'package:multiplayer_chess/features/auth/screens/email_verification.dart';
 import 'package:multiplayer_chess/features/auth/screens/sign_in_screen.dart';
 import 'package:multiplayer_chess/game_board.dart';
 import 'package:multiplayer_chess/screen/create_room.dart';
 import 'package:multiplayer_chess/screen/join__room.dart';
 import 'package:multiplayer_chess/screen/main__menu_screen.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -34,7 +42,8 @@ class _MyAppState extends ConsumerState<MyApp> {
     await ref.read(authServiceProvider).getUserData(context);
 
     final user = ref.read(userProvider);
-    final isAuthenticated = user != null ? user.token.isNotEmpty : false;
+
+    final isAuthenticated = user != null ? true : false;
 
     Future.delayed(Duration.zero, () {
       if (isAuthenticated) {
@@ -59,6 +68,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         CreateRoomScreen.routeName: (context) => const CreateRoomScreen(),
         JoinRoomScreen.routeName: (context) => const JoinRoomScreen(),
         GameBoard.routeName: (context) => const GameBoard(),
+        EmailVerification.routeName: (context) => const EmailVerification()
       },
       initialRoute: initialRoute,
     );

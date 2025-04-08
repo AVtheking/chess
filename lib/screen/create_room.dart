@@ -37,6 +37,9 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
       body: Stack(
         fit: StackFit.expand,
         children: [

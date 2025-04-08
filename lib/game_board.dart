@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_print, unused_local_variable
+
 import 'package:chess/chess.dart' as ch;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
+import 'package:flutter_stateless_chessboard/types.dart' as Board;
 import 'package:multiplayer_chess/features/auth/authService.dart';
 import 'package:multiplayer_chess/resources/socket__methods.dart';
 import 'package:multiplayer_chess/utils.dart';
@@ -20,10 +23,13 @@ class _GameBoardState extends ConsumerState<GameBoard> {
   void initState() {
     // print("this done");
 
-    ref.read(socketMethodsProvider).updateRoomListener(context);
-    ref.read(socketMethodsProvider).updatePlayerListener(context);
+    ref.read(socketMethodsProvider).initGameListener(context);
     ref.read(socketMethodsProvider).movesListener(context);
-    ref.read(socketMethodsProvider).endgameListener(context);
+    ref.read(socketMethodsProvider).gameOverListener(context);
+    // ref.read(socketMethodsProvider).updateRoomListener(context);
+    // ref.read(socketMethodsProvider).updatePlayerListener(context);
+    // ref.read(socketMethodsProvider).movesListener(context);
+    // ref.read(socketMethodsProvider).endgameListener(context);
     ref.read(socketMethodsProvider).errorListnere(context);
 
     setState(() {});
@@ -31,35 +37,41 @@ class _GameBoardState extends ConsumerState<GameBoard> {
     super.initState();
   }
 
-  void moves(String fen) {
-    final room = ref.read(roomProvider)!;
-    ref.watch(socketMethodsProvider).moves(fen, room['roomName']);
+  void moves(ShortMove move) {
+    final gameId = ref.read(gameIdProvider)!;
+
+    ref.watch(socketMethodsProvider).move(gameId, move);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    String _fen = ref.watch(movesProvider);
+    String fen = ref.watch(fenProvider);
     final size = MediaQuery.of(context).size;
-    final player1 = ref.watch(player1Provider);
-    // print(player1);
-    final player2 = ref.watch(player2Provider);
-    final roomData = ref.watch(roomProvider)!;
-    // print(roomData);
+    final startGame = ref.watch(initGame);
+    print(startGame);
+    final whitePlayer = ref.watch(whitePlayerProvider);
+
+    final blackPlayer = ref.watch(blackPlayerProvider);
+    print('whitePlayer: $whitePlayer');
+    print('blackPlayer: $blackPlayer');
+    final gameId = ref.watch(gameIdProvider)!;
+
     final user = ref.watch(userProvider)!;
-    if (checkmate(_fen, context)) {
-      final chess = ch.Chess.fromFEN(_fen);
-      final winner =
-          chess.turn == ch.Color.WHITE ? player2!.nickname : player1!.nickname;
-      ref.watch(socketMethodsProvider).checkmate(
-            winner,
-            roomData['roomName'],
-          );
+
+    if (checkmate(fen, context)) {
+      final chess = ch.Chess.fromFEN(fen);
+      // final winner =
+      //     chess.turn == ch.Color.WHITE ? player2!.nickname : player1!.nickname;
+      // ref.watch(socketMethodsProvider).checkmate(
+      //       winner,
+      //       roomData['roomName'],
+      //     );
     }
 
     return Scaffold(
-      body: roomData['isJoin']
-          ? const WaitingLobby()
+      body: !startGame
+          ? WaitingLobby(gameId: gameId)
           : Center(
               child: ConstrainedBox(
                 constraints:
@@ -76,18 +88,18 @@ class _GameBoardState extends ConsumerState<GameBoard> {
                             children: [
                               const CircleAvatar(
                                 backgroundImage: AssetImage(
-                                    'assets/imgaes/chessBackground.png'),
+                                    'assets/imgaes/chessBackground0.png'),
                               ),
                               const SizedBox(
                                 width: 20,
                               ),
                               Text(
-                                player1 != null && player2 != null
-                                    ? user.name != player1.nickname
-                                        ? player1.nickname
-                                        : player2.nickname
+                                whitePlayer != null && blackPlayer != null
+                                    ? user.username != whitePlayer.name
+                                        ? whitePlayer.name
+                                        : blackPlayer.name
                                     : "Username",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -97,39 +109,18 @@ class _GameBoardState extends ConsumerState<GameBoard> {
                           height: 30,
                         ),
                         Center(
-                          child: AbsorbPointer(
-                            absorbing: roomData['turn']['socketId'] !=
-                                ref
-                                    .watch(socketMethodsProvider)
-                                    .socketClient
-                                    .id,
-                            child: Chessboard(
-                              orientation: player1 != null && player2 != null
-                                  ? user.name == player1.nickname
-                                      ? player1.playertype == 'w'
-                                          ? Color.WHITE
-                                          : Color.BLACK
-                                      : player2!.playertype == 'w'
-                                          ? Color.WHITE
-                                          : Color.BLACK
-                                  : Color.WHITE,
-                              fen: _fen,
-                              size: size.width > 500 ? 500 : size.width,
-                              onMove: (move) {
-                                final nextFen = makeMove(
-                                  _fen,
-                                  {
-                                    'from': move.from,
-                                    'to': move.to,
-                                    'promotion': 'q'
-                                  },
-                                  context,
-                                );
-                                if (nextFen != null) {
-                                  moves(nextFen);
-                                }
-                              },
-                            ),
+                          child: Chessboard(
+                            orientation:
+                                whitePlayer != null && blackPlayer != null
+                                    ? user.username == whitePlayer.name
+                                        ? Board.Color.WHITE
+                                        : Board.Color.BLACK
+                                    : Board.Color.WHITE,
+                            fen: fen,
+                            size: size.width > 500 ? 500 : size.width,
+                            onMove: (move) {
+                              moves(move);
+                            },
                           ),
                         ),
                         const SizedBox(
@@ -141,18 +132,18 @@ class _GameBoardState extends ConsumerState<GameBoard> {
                             children: [
                               const CircleAvatar(
                                 backgroundImage: AssetImage(
-                                    'assets/imgaes/chessBackground.png'),
+                                    'assets/imgaes/chessBackground0.png'),
                               ),
                               const SizedBox(
                                 width: 20,
                               ),
                               Text(
-                                player1 != null && player2 != null
-                                    ? user.name == player1.nickname
-                                        ? player1.nickname
-                                        : player2.nickname
+                                whitePlayer != null && blackPlayer != null
+                                    ? user.username == whitePlayer.name
+                                        ? whitePlayer.name
+                                        : blackPlayer.name
                                     : "UserName",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
                             ],

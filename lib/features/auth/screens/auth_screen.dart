@@ -44,7 +44,6 @@ class _AuthScreeenState extends ConsumerState<AuthScreen> {
           "Multiplayer Chess",
           style: TextStyle(fontSize: 25),
         ),
-        // centerTitle: true,
       ),
       body: Center(
         child: ConstrainedBox(
@@ -56,18 +55,12 @@ class _AuthScreeenState extends ConsumerState<AuthScreen> {
               child: Column(
                 children: [
                   Container(
-                    decoration: const BoxDecoration(boxShadow: [
-                      // BoxShadow(
-                      //   color: Color.fromARGB(255, 5, 75, 8),
-                      //   blurRadius: 0,r̥ṅ
-                      //   spreadRadius: 0,
-                      // )
-                    ]),
+                    decoration: const BoxDecoration(boxShadow: []),
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: Image.asset(
-                        'assets/imgaes/chessBackground.png',
-                        fit: size.width > 500 ? BoxFit.cover : BoxFit.contain,
+                        'assets/imgaes/chessBackground0.png',
+                        fit: size.width > 500 ? BoxFit.cover : BoxFit.cover,
                         width: double.infinity,
                         height: size.width > 500
                             ? size.height * 0.4

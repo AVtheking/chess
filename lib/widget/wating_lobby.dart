@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:multiplayer_chess/constants/utils.dart';
 
 class WaitingLobby extends StatelessWidget {
-  const WaitingLobby({Key? key}) : super(key: key);
+  final String gameId;
+  const WaitingLobby({Key? key, required this.gameId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,36 +13,59 @@ class WaitingLobby extends StatelessWidget {
       children: [
         // Background Image
         Image.asset(
-          'assets/imgaes/chessBackground9.png', // Replace with your image asset path
-          fit: BoxFit
-              .cover, // Use BoxFit.cover to scale while maintaining aspect ratio
+          'assets/imgaes/chessBackground9.png',
+          fit: BoxFit.cover,
         ),
 
         // Centered Text
-        const Center(
+        Center(
           child: Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                LinearProgressIndicator(),
+                const LinearProgressIndicator(),
                 const SizedBox(
                   height: 20,
                 ),
                 Center(
-                  child: Text(
-                    "Waiting for opponent to join..",
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                          color: Color.fromARGB(255, 7, 134, 219),
-                          blurRadius: 10,
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Waiting for opponent to join..",
+                        style: TextStyle(
+                          fontSize: 35,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              color: Color.fromARGB(255, 7, 134, 219),
+                              blurRadius: 10,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    textAlign: TextAlign.center,
+                        textAlign: TextAlign.center,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(text: gameId));
+                          showSnackBar(context, "Game ID copied to clipboard");
+                        },
+                        child: Text(
+                          "Game ID: $gameId",
+                          style: const TextStyle(
+                            fontSize: 25,
+                            color: Color.fromARGB(255, 187, 186, 192),
+                            shadows: [
+                              Shadow(
+                                color: Color.fromARGB(255, 38, 71, 218),
+                                blurRadius: 10,
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

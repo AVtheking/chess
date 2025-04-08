@@ -1,42 +1,55 @@
+import 'dart:convert';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class Player {
-  final String nickname;
-  final String socketId;
+  final String name;
+  final String id;
 
-  final String playertype;
   Player({
-    required this.nickname,
-    required this.socketId,
-    required this.playertype,
+    required this.name,
+    required this.id,
   });
 
   Player copyWith({
-    String? nickname,
-    String? socketId,
-    double? points,
-    String? playertype,
+    String? name,
+    String? id,
   }) {
     return Player(
-      nickname: nickname ?? this.nickname,
-      socketId: socketId ?? this.socketId,
-      playertype: playertype ?? this.playertype,
+      name: name ?? this.name,
+      id: id ?? this.id,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'nickname': nickname,
-      'socketId': socketId,
-      'playertype': playertype,
+      'name': name,
+      'id': id,
     };
   }
 
   factory Player.fromMap(Map<String, dynamic> map) {
     return Player(
-      nickname: map['nickname'] as String,
-      socketId: map['socketId'] as String,
-      playertype: map['playertype'] as String,
+      name: map['name'] as String,
+      id: map['id'] as String,
     );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory Player.fromJson(String source) =>
+      Player.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() => 'Player(name: $name, id: $id)';
+
+  @override
+  bool operator ==(covariant Player other) {
+    if (identical(this, other)) return true;
+
+    return other.name == name && other.id == id;
+  }
+
+  @override
+  int get hashCode => name.hashCode ^ id.hashCode;
 }
